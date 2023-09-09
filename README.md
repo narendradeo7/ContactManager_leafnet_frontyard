@@ -1,3 +1,35 @@
+An assignment for Frontyard deployed on vercel - https://frontyardassignnarendra-narendradeo7.vercel.app/
+
+1. it has two sections one for creating and managing contacts using redux for state management
+
+2. Second one is line chart and geographical distribution of covid 19 cases shown using leafnet
+
+Techstacks-   Reacct , Redux , Tailwind and some libraries like react-leafnet and router dom
+
+Author:-
+Narendra Deo 
+7narendradeo@gmail.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
