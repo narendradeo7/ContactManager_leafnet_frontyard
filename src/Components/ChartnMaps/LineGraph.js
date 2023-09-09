@@ -1,27 +1,30 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Chart from 'chart.js/auto'; // Import Chart.js
 
-// loader for this part 
+// Loader for this part
 import HashLoader from 'react-spinners/HashLoader';
 
 const LineGraph = () => {
-    // states to handle data and if loading yet 
-
+    // States to handle data and loading status
     const [data, setData] = useState({});
     const [loading, setLoading] = useState(false);
-    //  useref to get hold of chart if created 
+
+    // useRef to get hold of the chart canvas element
     const chartRef = useRef(null);
 
     useEffect(() => {
         setLoading(true);
+
         async function fetchData() {
             try {
+                // Fetch COVID-19 historical data
                 const response = await fetch(
                     'https://disease.sh/v3/covid-19/historical/all?lastdays=all'
                 );
                 const data = await response.json();
 
                 if (data && data.cases) {
+                    // Prepare data for the chart
                     const chartData = {
                         labels: Object.keys(data.cases),
                         datasets: [
@@ -35,24 +38,21 @@ const LineGraph = () => {
                         ],
                     };
 
-                    setData(chartData);
-
-                    // Destroy the chart if it already exists
+                    // Check if the chart canvas element exists
                     if (chartRef.current) {
-                        chartRef.current.destroy();
+                        // Create the chart
+                        const ctx = chartRef.current.getContext('2d');
+                        new Chart(ctx, {
+                            type: 'line',
+                            data: chartData,
+                        });
                     }
 
-                    // Create the chart
-                    const ctx = document.getElementById('chart');
-                    chartRef.current = new Chart(ctx, {
-                        type: 'line',
-                        data: chartData,
-                    });
-                    
-                    // setLoading false if data fetched and chart created 
+                    // Set the chart data
+                    setData(chartData);
 
+                    // Set loading to false when data is fetched and chart is created
                     setLoading(false);
-
                 } else {
                     console.error('Data is undefined or empty.');
                 }
@@ -61,24 +61,31 @@ const LineGraph = () => {
             }
         }
 
+        // Fetch data when the component mounts (empty dependency array)
         fetchData();
     }, []);
 
     return (
-        <div className="line-graph w-[90%] md:w-[61vw]  px-[2%] mt-[2%]">
-            {loading? <div className='text-center flex justify-center my-[16%]' ><HashLoader
-
-                color={'#0b5ed7'}
-                loading={loading}
-                size={50}
-                aria-label="Loading Spinner"
-                data-testid="loader"
-            /></div> : <>
-                <h2 className='text-sechead font-head font-[700] text-[1.2rem] md:text-[2.2rem] text-center my-[1%]'>Worldwide COVID-19 Cases</h2>
-                <canvas id="chart" ></canvas>
-            </>}
-    </div>
-
+        <div className="line-graph w-[90%] md:w-[61vw] px-[2%] mt-[2%]">
+            {loading ? (
+                <div className='text-center flex justify-center my-[16%]'>
+                    <HashLoader
+                        color={'#0b5ed7'}
+                        loading={loading}
+                        size={50}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                    />
+                </div>
+            ) : (
+                <>
+                    <h2 className='text-sechead font-head font-[700] text-[1.2rem] md:text-[2.2rem] text-center my-[1%]'>
+                        Worldwide COVID-19 Cases
+                    </h2>
+                    <canvas id="chart" ref={chartRef}></canvas>
+                </>
+            )}
+        </div>
     );
 };
 
