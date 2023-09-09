@@ -47,7 +47,8 @@ const LineGraph = () => {
                             data: chartData,
                         });
                     }
-
+                    console.log(chartData);
+                    console.log('got chardata ')
                     // Set the chart data
                     setData(chartData);
 

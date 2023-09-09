@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+// all component imported to draw a leafnet map 
 
 const LeafletMap = () => {
+    // state to handle countries data 
   const [countriesData, setCountriesData] = useState([]);
+
+
+//   useffect to get data on render  
 
   useEffect(() => {
     async function fetchData() {
@@ -11,7 +16,6 @@ const LeafletMap = () => {
           'https://disease.sh/v3/covid-19/countries'
         );
         const data = await response.json();
-        console.log(data);
         setCountriesData(data);
       } catch (error) {
         console.error('Error fetching data: ', error);
@@ -20,6 +24,8 @@ const LeafletMap = () => {
 
     fetchData();
   }, []);
+
+//   now ploting map as per popup and detials required 
 
   return (
     <div className="leaflet-map w-[95%] h-[70vh] text-center">
