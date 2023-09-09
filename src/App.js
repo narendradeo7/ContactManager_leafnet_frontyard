@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+// imports 
+import React from 'react';
+import Sidebar from './Components/Sidebar';
+import { Route, Routes } from 'react-router-dom';
+import ContactManager from './Components/Contacts/ContactManager';
+import ChartnMapsec from './Components/ChartnMaps/ChartnMapsec';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div className="App flex">
+        {/* sidebar for navigation */}
+        <Sidebar />
+        {/* routes  */}
+        <Routes>
+          <Route path='/' element={<ContactManager />} />
+          <Route path='/graph' element={<ChartnMapsec />} />
+
+        </Routes>
+
+      </div>
   );
 }
 
