@@ -82,6 +82,7 @@ const LineGraph = () => {
                     <h2 className='text-sechead font-head font-[700] text-[1.2rem] md:text-[2.2rem] text-center my-[1%]'>
                         Worldwide COVID-19 Cases
                     </h2>
+                    {/* Canvas element for the chart */}
                     <canvas id="chart" ref={chartRef}></canvas>
                 </>
             )}
